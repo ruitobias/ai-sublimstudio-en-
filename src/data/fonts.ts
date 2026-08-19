@@ -1,0 +1,228 @@
+export interface FontDefinition {
+  id: string;
+  name: string;
+  fontFamily: string;
+  category: 'script' | 'impact' | 'vintage' | 'serif' | 'display' | 'clean';
+  categoryLabel: string;
+  sampleText: string;
+  isGoogleFont?: boolean;
+}
+
+export const VECTOR_FONTS: FontDefinition[] = [
+  // CALIGRAFIA & MANUSCRITA
+  {
+    id: 'pacifico',
+    name: 'Pacifico',
+    fontFamily: "'Pacifico', cursive",
+    category: 'script',
+    categoryLabel: 'Caligrafia & Manuscrita',
+    sampleText: 'Pacifico Design',
+    isGoogleFont: true,
+  },
+  {
+    id: 'dancing_script',
+    name: 'Dancing Script',
+    fontFamily: "'Dancing Script', cursive",
+    category: 'script',
+    categoryLabel: 'Caligrafia & Manuscrita',
+    sampleText: 'Dancing Script',
+    isGoogleFont: true,
+  },
+  {
+    id: 'great_vibes',
+    name: 'Great Vibes',
+    fontFamily: "'Great Vibes', cursive",
+    category: 'script',
+    categoryLabel: 'Caligrafia & Manuscrita',
+    sampleText: 'Great Vibes',
+    isGoogleFont: true,
+  },
+  {
+    id: 'satisfy',
+    name: 'Satisfy',
+    fontFamily: "'Satisfy', cursive",
+    category: 'script',
+    categoryLabel: 'Caligrafia & Manuscrita',
+    sampleText: 'Satisfy Style',
+    isGoogleFont: true,
+  },
+  {
+    id: 'caveat',
+    name: 'Caveat',
+    fontFamily: "'Caveat', cursive",
+    category: 'script',
+    categoryLabel: 'Caligrafia & Manuscrita',
+    sampleText: 'Caveat Sublimação',
+    isGoogleFont: true,
+  },
+
+  // SUBLIMAÇÃO & IMPACTO (BOLD)
+  {
+    id: 'bebas_neue',
+    name: 'Bebas Neue',
+    fontFamily: "'Bebas Neue', sans-serif",
+    category: 'impact',
+    categoryLabel: 'Impacto & Sublimação',
+    sampleText: 'BEBAS NEUE VETOR',
+    isGoogleFont: true,
+  },
+  {
+    id: 'oswald',
+    name: 'Oswald',
+    fontFamily: "'Oswald', sans-serif",
+    category: 'impact',
+    categoryLabel: 'Impacto & Sublimação',
+    sampleText: 'OSWALD SUBLIMAÇÃO',
+    isGoogleFont: true,
+  },
+  {
+    id: 'impact_std',
+    name: 'Impact Classic',
+    fontFamily: 'Impact, sans-serif',
+    category: 'impact',
+    categoryLabel: 'Impacto & Sublimação',
+    sampleText: 'IMPACT EXTRA BOLD',
+    isGoogleFont: false,
+  },
+  {
+    id: 'alfa_slab',
+    name: 'Alfa Slab One',
+    fontFamily: "'Alfa Slab One', cursive",
+    category: 'impact',
+    categoryLabel: 'Impacto & Sublimação',
+    sampleText: 'ALFA SLAB VETOR',
+    isGoogleFont: true,
+  },
+  {
+    id: 'luckiest_guy',
+    name: 'Luckiest Guy',
+    fontFamily: "'Luckiest Guy', cursive",
+    category: 'impact',
+    categoryLabel: 'Impacto & Sublimação',
+    sampleText: 'LUCKIEST GUY',
+    isGoogleFont: true,
+  },
+
+  // RETRO, VINTAGE & DIVERSÃO
+  {
+    id: 'lobster',
+    name: 'Lobster Vintage',
+    fontFamily: "'Lobster', cursive",
+    category: 'vintage',
+    categoryLabel: 'Retro, Vintage & Fun',
+    sampleText: 'Lobster Vintage',
+    isGoogleFont: true,
+  },
+  {
+    id: 'permanent_marker',
+    name: 'Permanent Marker',
+    fontFamily: "'Permanent Marker', cursive",
+    category: 'vintage',
+    categoryLabel: 'Retro, Vintage & Fun',
+    sampleText: 'Marker Street',
+    isGoogleFont: true,
+  },
+  {
+    id: 'bangers',
+    name: 'Bangers Comic',
+    fontFamily: "'Bangers', cursive",
+    category: 'vintage',
+    categoryLabel: 'Retro, Vintage & Fun',
+    sampleText: 'BANGERS COMIC',
+    isGoogleFont: true,
+  },
+  {
+    id: 'righteous',
+    name: 'Righteous Modern',
+    fontFamily: "'Righteous', cursive",
+    category: 'vintage',
+    categoryLabel: 'Retro, Vintage & Fun',
+    sampleText: 'RIGHTEOUS 80S',
+    isGoogleFont: true,
+  },
+  {
+    id: 'fredoka',
+    name: 'Fredoka Round',
+    fontFamily: "'Fredoka', sans-serif",
+    category: 'vintage',
+    categoryLabel: 'Retro, Vintage & Fun',
+    sampleText: 'Fredoka Infantil',
+    isGoogleFont: true,
+  },
+
+  // SERIF & ELEGANTE
+  {
+    id: 'playfair_display',
+    name: 'Playfair Display',
+    fontFamily: "'Playfair Display', serif",
+    category: 'serif',
+    categoryLabel: 'Serif & Elegante',
+    sampleText: 'Playfair Elegance',
+    isGoogleFont: true,
+  },
+  {
+    id: 'cinzel',
+    name: 'Cinzel Roman',
+    fontFamily: "'Cinzel', serif",
+    category: 'serif',
+    categoryLabel: 'Serif & Elegante',
+    sampleText: 'CINZEL IMPERIAL',
+    isGoogleFont: true,
+  },
+  {
+    id: 'cinzel_decorative',
+    name: 'Cinzel Decorative',
+    fontFamily: "'Cinzel Decorative', serif",
+    category: 'serif',
+    categoryLabel: 'Serif & Elegante',
+    sampleText: 'CINZEL DECORATIVE',
+    isGoogleFont: true,
+  },
+  {
+    id: 'abril_fatface',
+    name: 'Abril Fatface',
+    fontFamily: "'Abril Fatface', cursive",
+    category: 'serif',
+    categoryLabel: 'Serif & Elegante',
+    sampleText: 'Abril Premium',
+    isGoogleFont: true,
+  },
+  {
+    id: 'georgia_std',
+    name: 'Georgia',
+    fontFamily: 'Georgia, serif',
+    category: 'serif',
+    categoryLabel: 'Serif & Elegante',
+    sampleText: 'Georgia Classic',
+    isGoogleFont: false,
+  },
+
+  // CLEAN & MODERN
+  {
+    id: 'montserrat',
+    name: 'Montserrat ExtraBold',
+    fontFamily: "'Montserrat', sans-serif",
+    category: 'clean',
+    categoryLabel: 'Clean & Modern',
+    sampleText: 'MONTSERRAT CLEAN',
+    isGoogleFont: true,
+  },
+  {
+    id: 'arial_std',
+    name: 'Arial',
+    fontFamily: 'Arial, sans-serif',
+    category: 'clean',
+    categoryLabel: 'Clean & Modern',
+    sampleText: 'Arial Standard',
+    isGoogleFont: false,
+  },
+  {
+    id: 'trebuchet_std',
+    name: 'Trebuchet MS',
+    fontFamily: "'Trebuchet MS', sans-serif",
+    category: 'clean',
+    categoryLabel: 'Clean & Modern',
+    sampleText: 'Trebuchet Clean',
+    isGoogleFont: false,
+  },
+];
