@@ -35,6 +35,7 @@ import { Layer, SublimationProduct } from '../types';
 import { useTranslation } from '../i18n';
 import {
   CANVA_TEMPLATES,
+  CANVA_RUI_TOBIAS_DAHSWYJX7QW_SVG,
   CanvaTemplateItem,
   searchCanvaTemplates,
   getPaizaoTemplateLayers,
@@ -48,20 +49,30 @@ import {
   getNatalMerryChristmasPolaroidTemplateLayers,
   getNatalGeometricTemplateLayers,
   getNatalChristmasIsLoveTemplateLayers,
-  getNatalAveMariaTemplateLayers,
   getNatalNatividadeTemplateLayers,
   getNatalKraftFloralTemplateLayers,
   getNatalDouradoLuxoTemplateLayers,
   getNatalMagicoPatternTemplateLayers,
   getNatalSagradaFamiliaTemplateLayers,
   getNatalCapivaraTemplateLayers,
+  getNatalNatividadeBrilhoTemplateLayers,
+  getNatalMaePresenteTemplateLayers,
+  getNatalBonecoNeveAquarelaTemplateLayers,
+  getNatalPapaiNoelDoodleTemplateLayers,
+  getNatalBolinhasDesejosTemplateLayers,
+  getNatalHoHoPapaiNoelChegouTemplateLayers,
+  getNatalGingerbreadCandyTemplateLayers,
+  getNatalVermelhoNobreTemplateLayers,
+  getFathersDayAzureStarsTemplateLayers,
   getPaisCoracaoRecortadoTemplateLayers,
+  getPaisMedalhaSuperPaiAzulTemplateLayers,
   getPaisMeuHeroiBlueyTemplateLayers,
   getPaisTiraFotosVintageTemplateLayers,
   getPaisEuTeAmoBoldTemplateLayers,
   getPaisMonolineMinimalistaTemplateLayers,
   getPaisSuperHeroiTemplateLayers,
   getPaisTabelaNutricionalTemplateLayers,
+  getPaisTeAmoForcaSabedoriaTemplateLayers,
   getPaisTiraDuplaRippedTemplateLayers,
   getPaisTimeCafeRetroTemplateLayers,
   getMaesMolduraFloralTemplateLayers,
@@ -133,6 +144,21 @@ export function CanvaModal({
       console.warn('Failed to parse saved embeds:', e);
     }
     return [
+      {
+        id: 'canva-rui-tobias-dahswyjx7qw',
+        title: 'Cópia de Sem nome • Rui Tobias Carvalho (Canva Pro)',
+        category: 'mugs',
+        categoryLabel: 'Canecas & Sublimação',
+        previewUrl: CANVA_RUI_TOBIAS_DAHSWYJX7QW_SVG,
+        embedUrl: 'https://www.canva.com/design/DAHSwyjx7Qw/7n2H-nxYr0rqeOCWbvgrMw/view?embed',
+        viewUrl: 'https://www.canva.com/design/DAHSwyjx7Qw/7n2H-nxYr0rqeOCWbvgrMw/view?utm_content=DAHSwyjx7Qw&utm_campaign=designshare&utm_medium=embeds&utm_source=link',
+        templateUrl: 'https://www.canva.com/design/DAHSwyjx7Qw/7n2H-nxYr0rqeOCWbvgrMw/view?utm_content=DAHSwyjx7Qw&utm_campaign=designshare&utm_medium=embeds&utm_source=link',
+        widthMm: 200,
+        heightMm: 95,
+        tags: ['copia de sem nome', 'sem nome', 'rui tobias', 'rui tobias carvalho', 'caneca', 'sublimacao', 'sublimação', 'canva', 'pro', 'template', 'embed', 'estampa', 'panoramica', 'dahswyjx7qw', 'foto', 'polaroid', 'elegante', 'design especial'],
+        description: 'Modelo oficial Canva Pro por Rui Tobias Carvalho (DAHSwyjx7Qw - "Cópia de Sem nome"). Caneca panorâmica 200 × 95 mm com moldura polaroid, aquarela e tipografia de luxo.',
+        author: 'Rui Tobias Carvalho (Canva Pro)',
+      },
       {
         id: 'canva-paizao-futebol-user',
         title: 'Pai zão Nº 1 • Futebol & Troféu Campeão (Canva Pro)',
@@ -344,6 +370,12 @@ export function CanvaModal({
         onClose();
         return;
       }
+      if (template.id.includes('ilustracao-estrelas-azure') || template.id.includes('azure-stars') || template.title.toLowerCase().includes('estrelas azure') || template.title.toLowerCase().includes('ilustração afeto')) {
+        onLoadTemplateLayers(template.title, getFathersDayAzureStarsTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com 17 camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
       if (template.id.includes('coracao-recortado') || template.title.toLowerCase().includes('coração recortado') || template.title.toLowerCase().includes('coracao recortado')) {
         onLoadTemplateLayers(template.title, getPaisCoracaoRecortadoTemplateLayers(Date.now()));
         onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
@@ -374,7 +406,13 @@ export function CanvaModal({
         onClose();
         return;
       }
-      if (template.id.includes('super-heroi') || template.title.toLowerCase().includes('super pai') || template.title.toLowerCase().includes('super-herói') || template.title.toLowerCase().includes('super-heroi')) {
+      if (template.id.includes('medalha-super-pai') || template.id.includes('medalha') || template.title.toLowerCase().includes('medalha super pai') || template.title.toLowerCase().includes('melhor pai do mundo')) {
+        onLoadTemplateLayers(template.title, getPaisMedalhaSuperPaiAzulTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com 8 camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('super-heroi') || (template.title.toLowerCase().includes('super pai') && !template.title.toLowerCase().includes('medalha')) || template.title.toLowerCase().includes('super-herói') || template.title.toLowerCase().includes('super-heroi')) {
         onLoadTemplateLayers(template.title, getPaisSuperHeroiTemplateLayers(Date.now()));
         onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
         onClose();
@@ -382,7 +420,13 @@ export function CanvaModal({
       }
       if (template.id.includes('tabela-nutricional') || template.title.toLowerCase().includes('tabela nutricional')) {
         onLoadTemplateLayers(template.title, getPaisTabelaNutricionalTemplateLayers(Date.now()));
-        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com 28 camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('te-amo-forca') || template.title.toLowerCase().includes('força, sabedoria') || template.title.toLowerCase().includes('forca, sabedoria') || (template.title.toLowerCase().includes('te amo pai') && template.title.toLowerCase().includes('sabedoria'))) {
+        onLoadTemplateLayers(template.title, getPaisTeAmoForcaSabedoriaTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com 15 camadas editáveis!`, 'success');
         onClose();
         return;
       }
@@ -410,8 +454,50 @@ export function CanvaModal({
         onClose();
         return;
       }
-      if (template.id.includes('ave-maria') || template.title.toLowerCase().includes('ave maria')) {
-        onLoadTemplateLayers(template.title, getNatalAveMariaTemplateLayers(Date.now()));
+      if (template.id.includes('natividade-brilho') || (template.id.includes('natividade') && template.title.toLowerCase().includes('brilho'))) {
+        onLoadTemplateLayers(template.title, getNatalNatividadeBrilhoTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('mae-presente') || template.title.toLowerCase().includes('presente diário') || template.title.toLowerCase().includes('presente diario')) {
+        onLoadTemplateLayers(template.title, getNatalMaePresenteTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('boneco-neve') || template.title.toLowerCase().includes('boneco de neve')) {
+        onLoadTemplateLayers(template.title, getNatalBonecoNeveAquarelaTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('papai-noel-doodle') || template.title.toLowerCase().includes('doodle')) {
+        onLoadTemplateLayers(template.title, getNatalPapaiNoelDoodleTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('bolinhas-desejos') || template.title.toLowerCase().includes('desejos') || template.title.toLowerCase().includes('sentimentos')) {
+        onLoadTemplateLayers(template.title, getNatalBolinhasDesejosTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('hoho-papai-noel-chegou') || template.title.toLowerCase().includes('chegou')) {
+        onLoadTemplateLayers(template.title, getNatalHoHoPapaiNoelChegouTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('gingerbread') || template.title.toLowerCase().includes('gingerbread') || template.title.toLowerCase().includes('doces de natal')) {
+        onLoadTemplateLayers(template.title, getNatalGingerbreadCandyTemplateLayers(Date.now()));
+        onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
+        onClose();
+        return;
+      }
+      if (template.id.includes('vermelho-nobre') || template.title.toLowerCase().includes('vermelho clássico') || template.title.toLowerCase().includes('vermelho classico')) {
+        onLoadTemplateLayers(template.title, getNatalVermelhoNobreTemplateLayers(Date.now()));
         onShowSnackbar?.(`🎨 Modelo "${template.title}" carregado para edição com camadas editáveis!`, 'success');
         onClose();
         return;
@@ -548,18 +634,31 @@ export function CanvaModal({
     }
   };
 
-  // Helper to extract embed URL, Canva view URL or Pro Template URL
+  // Helper to extract embed URL, Canva view URL or Pro Template URL, title and author from HTML or raw links
   const extractCanvaUrls = (raw: string) => {
-    const trimmed = raw.trim();
+    // Unescape common HTML entities if present in embed code snippet
+    const unescaped = raw
+      .replace(/&#x2F;/g, '/')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"');
+    const trimmed = unescaped.trim();
+
     const canvaLinkMatch = trimmed.match(/(https:\/\/canva\.link\/[a-zA-Z0-9_-]+)/i);
     const templateMatch = trimmed.match(/(https:\/\/www\.canva\.com\/design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/template\/edit[^\s"']*)/i) ||
       trimmed.match(/(https:\/\/www\.canva\.com\/design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\/template[^\s"']*)/i);
     const iframeSrc = trimmed.match(/src=["'](https:\/\/www\.canva\.com\/design\/[^"']+)["']/i);
+    const anchorHref = trimmed.match(/<a\s+[^>]*href=["'](https:\/\/www\.canva\.com\/design\/[^"']+)["']/i);
+    const anchorText = trimmed.match(/<a[^>]*>([^<]+)<\/a>/i);
+    const authorAfterAnchor = trimmed.match(/<\/a>\s*(?:de|by)\s*([^<\n]+)/i);
     const directUrl = trimmed.match(/(https:\/\/www\.canva\.com\/design\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+(\/view)?(\?embed)?)/i);
     
     let embedUrl = '';
     let viewUrl = '';
     let templateUrl = '';
+    const extractedTitle = anchorText ? anchorText[1].trim() : '';
+    const extractedAuthor = authorAfterAnchor ? authorAfterAnchor[1].trim() : '';
     let designId = 'canva-' + Date.now();
 
     if (canvaLinkMatch) {
@@ -571,6 +670,11 @@ export function CanvaModal({
       if (idMatch) designId = idMatch[1];
     } else if (iframeSrc) {
       embedUrl = iframeSrc[1];
+    } else if (anchorHref) {
+      const href = anchorHref[1];
+      const base = href.replace(/\?.*$/, '').replace(/\/view$/, '');
+      embedUrl = `${base}/view?embed`;
+      viewUrl = href;
     } else if (directUrl) {
       const base = directUrl[1].replace(/\?.*$/, '').replace(/\/view$/, '');
       embedUrl = `${base}/view?embed`;
@@ -583,7 +687,7 @@ export function CanvaModal({
       if (!viewUrl) viewUrl = embedUrl.replace(/\?embed/, '');
     }
 
-    return { embedUrl, viewUrl, templateUrl, designId };
+    return { embedUrl, viewUrl, templateUrl, designId, extractedTitle, extractedAuthor };
   };
 
   const handleAddCustomTemplateFromForm = (e: React.FormEvent) => {
@@ -593,23 +697,23 @@ export function CanvaModal({
       return;
     }
 
-    const { embedUrl, viewUrl, templateUrl, designId } = extractCanvaUrls(newTemplateUrl);
-    const finalTitle = newTemplateTitle.trim() || (templateUrl ? 'Meu Modelo Canva Pro' : 'Meu Design Canva');
+    const { embedUrl, viewUrl, templateUrl, designId, extractedTitle, extractedAuthor } = extractCanvaUrls(newTemplateUrl);
+    const finalTitle = newTemplateTitle.trim() || extractedTitle || (templateUrl ? 'Meu Modelo Canva Pro' : 'Meu Design Canva');
 
     const newTemplateItem: CanvaTemplateItem = {
       id: `my-tpl-${designId}`,
       title: finalTitle,
       category: newTemplateCategory,
       categoryLabel: newTemplateCategory === 'fathers' ? 'Dia dos Pais' : newTemplateCategory === 'mugs' ? 'Canecas' : 'Meus Modelos',
-      previewUrl: 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=800&auto=format&fit=crop&q=80',
+      previewUrl: designId.toLowerCase().includes('dahswyjx7qw') ? CANVA_RUI_TOBIAS_DAHSWYJX7QW_SVG : 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=800&auto=format&fit=crop&q=80',
       embedUrl: embedUrl || undefined,
       viewUrl: viewUrl || templateUrl || embedUrl || newTemplateUrl,
       templateUrl: templateUrl || newTemplateUrl,
       widthMm: productWidthMm,
       heightMm: productHeightMm,
-      tags: ['meu', 'template', 'pro', 'canva', newTemplateCategory],
+      tags: ['meu', 'template', 'pro', 'canva', newTemplateCategory, designId.toLowerCase()],
       description: 'Modelo Canva Pro salvo nos seus templates para personalização e sublimação.',
-      author: 'Minha Coleção Canva Pro',
+      author: extractedAuthor ? `${extractedAuthor} (Canva Pro)` : 'Minha Coleção Canva Pro',
     };
 
     setCustomEmbeds((prev) => [newTemplateItem, ...prev.filter((p) => p.id !== newTemplateItem.id)]);
@@ -619,28 +723,31 @@ export function CanvaModal({
   };
 
   const handleAddCustomEmbed = () => {
-    const { embedUrl, viewUrl, templateUrl, designId } = extractCanvaUrls(embedInput);
+    const { embedUrl, viewUrl, templateUrl, designId, extractedTitle, extractedAuthor } = extractCanvaUrls(embedInput);
     if (!embedUrl && !templateUrl && !viewUrl) {
       onShowSnackbar?.('Por favor insira um código de incorporação, link de modelo Pro (ex: canva.link/...) ou link válido do Canva.', 'error');
       return;
     }
 
+    const titlePrefix = extractedTitle || (templateUrl ? 'Modelo Canva Pro • ' + designId.slice(0, 10) : 'Design Incorporado Canva • ' + designId.slice(0, 8));
+    const authorStr = extractedAuthor ? `${extractedAuthor} (Canva Pro)` : (templateUrl ? 'Canva Pro Template' : 'Design Canva');
+
     const newEmbedItem: CanvaTemplateItem = {
       id: `embed-${designId}`,
-      title: templateUrl ? 'Modelo Canva Pro • ' + designId.slice(0, 10) : 'Design Incorporado Canva • ' + designId.slice(0, 8),
+      title: titlePrefix,
       category: 'fathers',
       categoryLabel: templateUrl ? 'Canva Pro Template' : 'Canva Embed',
-      previewUrl: 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=800&auto=format&fit=crop&q=80',
+      previewUrl: designId.toLowerCase().includes('dahswyjx7qw') ? CANVA_RUI_TOBIAS_DAHSWYJX7QW_SVG : 'https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=800&auto=format&fit=crop&q=80',
       embedUrl: embedUrl || undefined,
       viewUrl: viewUrl || templateUrl || embedUrl,
       templateUrl: templateUrl || undefined,
       widthMm: productWidthMm,
       heightMm: productHeightMm,
-      tags: ['canva', 'embed', 'incorporado', 'design', 'personalizado', 'pro', 'template'],
+      tags: ['canva', 'embed', 'incorporado', 'design', 'personalizado', 'pro', 'template', designId.toLowerCase()],
       description: templateUrl
         ? 'Modelo oficial do Canva Pro. Abra diretamente no editor oficial do Canva com 1 clique ou edite no SublimStudio.'
         : 'Design interativo incorporado do Canva pronto para uso e visualização.',
-      author: templateUrl ? 'Canva Pro Template' : 'Design Canva',
+      author: authorStr,
     };
 
     setCustomEmbeds((prev) => [newEmbedItem, ...prev.filter((p) => p.id !== newEmbedItem.id)]);

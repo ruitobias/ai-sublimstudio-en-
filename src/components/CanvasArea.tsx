@@ -532,49 +532,45 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
     setContextMenu(null);
   };
 
-  // Adjust all layers in the design/template to fit page width and height
+  // Adjust all layers in the design/template to fit page and safe margins perfectly
   const handleFitAllLayersToPageWidth = () => {
     if (!layers || layers.length === 0) return;
     const printWidth = Math.round((product.defaultWidthCm / 2.54) * 150);
     const printHeight = Math.round((product.defaultHeightCm / 2.54) * 150);
 
-    const bgLayer = layers.find(
-      (l) => l.x === 0 && l.y === 0 && (
-        l.name?.toLowerCase().includes('fundo') ||
-        l.name?.toLowerCase().includes('background') ||
-        l.name?.toLowerCase().includes('base') ||
-        l.width >= 500
-      )
-    );
+    const safeMarginX = 12;
+    const safeMarginY = 12;
+    const availW = printWidth - safeMarginX * 2;
+    const availH = printHeight - safeMarginY * 2;
 
-    let refWidth = bgLayer ? bgLayer.width : 0;
-    let refHeight = bgLayer ? bgLayer.height : 0;
+    const isBg = (l: Layer) =>
+      (l.x === 0 && l.y === 0 && l.width >= printWidth * 0.7) ||
+      l.name?.toLowerCase().includes('fundo') ||
+      l.name?.toLowerCase().includes('background') ||
+      l.name?.toLowerCase().includes('base') ||
+      l.name?.toLowerCase().includes('banner') ||
+      l.name?.toLowerCase().includes('gradient');
 
-    if (refWidth < 200 || refHeight < 100) {
-      const minX = Math.min(...layers.map((l) => l.x));
-      const minY = Math.min(...layers.map((l) => l.y));
-      const maxX = Math.max(...layers.map((l) => l.x + (l.width || 0)));
-      const maxY = Math.max(...layers.map((l) => l.y + (l.height || 0)));
+    const fgLayers = layers.filter((l) => !isBg(l));
+    const targetFg = fgLayers.length > 0 ? fgLayers : layers;
 
-      refWidth = maxX > minX ? maxX : printWidth;
-      refHeight = maxY > minY ? maxY : printHeight;
-    }
+    const minX = Math.min(...targetFg.map((l) => l.x));
+    const minY = Math.min(...targetFg.map((l) => l.y));
+    const maxX = Math.max(...targetFg.map((l) => l.x + (l.width || 50)));
+    const maxY = Math.max(...targetFg.map((l) => l.y + (l.height || 50)));
 
-    if (refWidth < 200) refWidth = 756;
-    if (refHeight < 100) refHeight = 359;
+    const currentW = Math.max(20, maxX - minX);
+    const currentH = Math.max(20, maxY - minY);
 
-    const scaleX = printWidth / refWidth;
-    const scaleY = printHeight / refHeight;
-    const avgScale = (scaleX + scaleY) / 2;
+    const scaleFactor = Math.min(availW / currentW, availH / currentH, 1.25);
+    const scaledW = currentW * scaleFactor;
+    const scaledH = currentH * scaleFactor;
+
+    const startX = Math.round((printWidth - scaledW) / 2);
+    const startY = Math.round((printHeight - scaledH) / 2);
 
     const updatedLayers: Layer[] = layers.map((layer) => {
-      const isBackground = layer.x === 0 && layer.y === 0 && (
-        Math.abs(layer.width - refWidth) <= 15 ||
-        layer.name?.toLowerCase().includes('fundo') ||
-        layer.name?.toLowerCase().includes('background')
-      );
-
-      if (isBackground) {
+      if (isBg(layer)) {
         return {
           ...layer,
           x: 0,
@@ -584,10 +580,13 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
         };
       }
 
-      const newX = Math.round(layer.x * scaleX);
-      const newY = Math.round(layer.y * scaleY);
-      const newW = Math.max(10, Math.round(layer.width * scaleX));
-      const newH = Math.max(10, Math.round(layer.height * scaleY));
+      const relX = layer.x - minX;
+      const relY = layer.y - minY;
+
+      const newX = Math.round(startX + relX * scaleFactor);
+      const newY = Math.round(startY + relY * scaleFactor);
+      const newW = Math.max(10, Math.round((layer.width || 50) * scaleFactor));
+      const newH = Math.max(10, Math.round((layer.height || 50) * scaleFactor));
 
       const updated: Layer = {
         ...layer,
@@ -599,15 +598,15 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
 
       if (layer.type === 'text') {
         if (layer.fontSize) {
-          updated.fontSize = Math.max(8, Math.round(layer.fontSize * avgScale));
+          updated.fontSize = Math.max(8, Math.round(layer.fontSize * scaleFactor));
         }
         if (layer.curveRadius) {
-          updated.curveRadius = Math.round(layer.curveRadius * avgScale);
+          updated.curveRadius = Math.round(layer.curveRadius * scaleFactor);
         }
       }
 
       if (layer.strokeWidth) {
-        updated.strokeWidth = Math.max(1, Math.round(layer.strokeWidth * avgScale));
+        updated.strokeWidth = Math.max(1, Math.round(layer.strokeWidth * scaleFactor));
       }
 
       return updated;
@@ -619,7 +618,7 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
       updatedLayers.forEach((l) => onUpdateLayer(l));
     }
     if (pushHistoryStep) {
-      pushHistoryStep('Ajustou Modelo na Largura da Página', 'Ajustar Modelo', updatedLayers);
+      pushHistoryStep('Ajustou Todos Elementos no Layout', 'Ajustar Layout', updatedLayers);
     }
   };
 
@@ -3569,18 +3568,18 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
           <span>Ajustar Tela</span>
         </button>
 
-        {/* Fit Template / Model to Page Width */}
+        {/* Fit Template / Model to Layout */}
         <button
           onClick={handleFitAllLayersToPageWidth}
-          className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-colors cursor-pointer ${
+          className={`flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold rounded-lg transition-colors cursor-pointer shadow-sm ${
             theme === 'light'
               ? 'bg-cyan-50 text-cyan-800 hover:bg-cyan-100 border border-cyan-300'
-              : 'bg-cyan-950/60 text-cyan-300 hover:bg-cyan-900/80 border border-cyan-500/40'
+              : 'bg-cyan-950/70 text-cyan-300 hover:bg-cyan-900/90 border border-cyan-500/50'
           }`}
-          title="Ajustar todas as camadas do modelo na largura da página"
+          title="Ajustar e incluir todos os elementos perfeitamente no layout da estampa e margem segura"
         >
           <MoveHorizontal className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="hidden sm:inline">Ajustar Modelo na Largura</span>
+          <span className="hidden sm:inline">Ajustar Tudo no Layout</span>
         </button>
 
         {/* Reset Pan / Center */}
@@ -4172,7 +4171,7 @@ export const CanvasArea: React.FC<CanvasAreaProps> = ({
                   }`}
                 >
                   <MoveHorizontal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                  <span>Ajustar Modelo na Largura da Página</span>
+                  <span>Ajustar Todos Elementos ao Layout</span>
                 </button>
                 <button
                   onClick={() => {

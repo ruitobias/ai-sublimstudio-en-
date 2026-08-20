@@ -1431,44 +1431,39 @@ export default function App() {
     const targetCanvasWidth = Math.round((currentProduct.defaultWidthCm / 2.54) * 150);
     const targetCanvasHeight = Math.round((currentProduct.defaultHeightCm / 2.54) * 150);
 
-    // Find reference dimensions of incoming template
-    const bgLayer = rawLayers.find(
-      (l) => l.x === 0 && l.y === 0 && (
-        l.name?.toLowerCase().includes('fundo') ||
-        l.name?.toLowerCase().includes('background') ||
-        l.name?.toLowerCase().includes('base') ||
-        l.width >= 500
-      )
-    );
+    const safeMarginX = 12;
+    const safeMarginY = 12;
+    const availW = targetCanvasWidth - safeMarginX * 2;
+    const availH = targetCanvasHeight - safeMarginY * 2;
 
-    let refWidth = bgLayer ? bgLayer.width : 0;
-    let refHeight = bgLayer ? bgLayer.height : 0;
+    const isBg = (l: Layer) =>
+      (l.x === 0 && l.y === 0 && l.width >= 500) ||
+      l.name?.toLowerCase().includes('fundo') ||
+      l.name?.toLowerCase().includes('background') ||
+      l.name?.toLowerCase().includes('base') ||
+      l.name?.toLowerCase().includes('banner') ||
+      l.name?.toLowerCase().includes('gradient');
 
-    if (refWidth < 200 || refHeight < 100) {
-      const minX = Math.min(...rawLayers.map((l) => l.x));
-      const minY = Math.min(...rawLayers.map((l) => l.y));
-      const maxX = Math.max(...rawLayers.map((l) => l.x + (l.width || 0)));
-      const maxY = Math.max(...rawLayers.map((l) => l.y + (l.height || 0)));
+    const fgLayers = rawLayers.filter((l) => !isBg(l));
+    const targetFg = fgLayers.length > 0 ? fgLayers : rawLayers;
 
-      refWidth = maxX > minX ? maxX : targetCanvasWidth;
-      refHeight = maxY > minY ? maxY : targetCanvasHeight;
-    }
+    const minX = Math.min(...targetFg.map((l) => l.x));
+    const minY = Math.min(...targetFg.map((l) => l.y));
+    const maxX = Math.max(...targetFg.map((l) => l.x + (l.width || 50)));
+    const maxY = Math.max(...targetFg.map((l) => l.y + (l.height || 50)));
 
-    if (refWidth < 200) refWidth = 756;
-    if (refHeight < 100) refHeight = 359;
+    const currentW = Math.max(20, maxX - minX);
+    const currentH = Math.max(20, maxY - minY);
 
-    const scaleX = targetCanvasWidth / refWidth;
-    const scaleY = targetCanvasHeight / refHeight;
-    const avgScale = (scaleX + scaleY) / 2;
+    const scaleFactor = Math.min(availW / currentW, availH / currentH, 1.25);
+    const scaledW = currentW * scaleFactor;
+    const scaledH = currentH * scaleFactor;
+
+    const startX = Math.round((targetCanvasWidth - scaledW) / 2);
+    const startY = Math.round((targetCanvasHeight - scaledH) / 2);
 
     const adjustedLayers: Layer[] = rawLayers.map((layer) => {
-      const isBackground = layer.x === 0 && layer.y === 0 && (
-        Math.abs(layer.width - refWidth) <= 15 ||
-        layer.name?.toLowerCase().includes('fundo') ||
-        layer.name?.toLowerCase().includes('background')
-      );
-
-      if (isBackground) {
+      if (isBg(layer)) {
         return {
           ...layer,
           x: 0,
@@ -1478,10 +1473,13 @@ export default function App() {
         };
       }
 
-      const newX = Math.round(layer.x * scaleX);
-      const newY = Math.round(layer.y * scaleY);
-      const newW = Math.max(10, Math.round(layer.width * scaleX));
-      const newH = Math.max(10, Math.round(layer.height * scaleY));
+      const relX = layer.x - minX;
+      const relY = layer.y - minY;
+
+      const newX = Math.round(startX + relX * scaleFactor);
+      const newY = Math.round(startY + relY * scaleFactor);
+      const newW = Math.max(10, Math.round((layer.width || 50) * scaleFactor));
+      const newH = Math.max(10, Math.round((layer.height || 50) * scaleFactor));
 
       const updated: Layer = {
         ...layer,
@@ -1493,15 +1491,15 @@ export default function App() {
 
       if (layer.type === 'text') {
         if (layer.fontSize) {
-          updated.fontSize = Math.max(8, Math.round(layer.fontSize * avgScale));
+          updated.fontSize = Math.max(8, Math.round(layer.fontSize * scaleFactor));
         }
         if (layer.curveRadius) {
-          updated.curveRadius = Math.round(layer.curveRadius * avgScale);
+          updated.curveRadius = Math.round(layer.curveRadius * scaleFactor);
         }
       }
 
       if (layer.strokeWidth) {
-        updated.strokeWidth = Math.max(1, Math.round(layer.strokeWidth * avgScale));
+        updated.strokeWidth = Math.max(1, Math.round(layer.strokeWidth * scaleFactor));
       }
 
       return updated;

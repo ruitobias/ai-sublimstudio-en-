@@ -768,7 +768,7 @@ export const CANVA_TEMPLATES: CanvaTemplateItem[] = [
   },
   {
     id: 'canva-rui-tobias-dahswyjx7qw',
-    title: 'Design Especial Caneca • Rui Tobias Carvalho (Canva Pro Embed)',
+    title: 'Cópia de Sem nome • Rui Tobias Carvalho (Canva Pro Embed)',
     category: 'mugs',
     categoryLabel: 'Canecas & Sublimação',
     previewUrl: CANVA_RUI_TOBIAS_DAHSWYJX7QW_SVG,
@@ -777,8 +777,8 @@ export const CANVA_TEMPLATES: CanvaTemplateItem[] = [
     templateUrl: 'https://www.canva.com/design/DAHSwyjx7Qw/7n2H-nxYr0rqeOCWbvgrMw/view?utm_content=DAHSwyjx7Qw&utm_campaign=designshare&utm_medium=embeds&utm_source=link',
     widthMm: 200,
     heightMm: 95,
-    tags: ['rui tobias', 'rui tobias carvalho', 'caneca', 'sublimacao', 'sublimação', 'canva', 'pro', 'template', 'embed', 'estampa', 'panoramica', 'dahswyjx7qw', 'foto', 'polaroid', 'elegante'],
-    description: 'Modelo oficial Canva Pro por Rui Tobias Carvalho (DAHSwyjx7Qw). Caneca panorâmica 200 × 95 mm com moldura polaroid, aquarela e tipografia de luxo.',
+    tags: ['copia de sem nome', 'cópia de sem nome', 'sem nome', 'rui tobias', 'rui tobias carvalho', 'caneca', 'sublimacao', 'sublimação', 'canva', 'pro', 'template', 'embed', 'estampa', 'panoramica', 'dahswyjx7qw', 'foto', 'polaroid', 'elegante', 'design especial'],
+    description: 'Modelo oficial Canva Pro por Rui Tobias Carvalho (DAHSwyjx7Qw - "Cópia de Sem nome"). Caneca panorâmica 200 × 95 mm com moldura polaroid, aquarela e tipografia de luxo.',
     author: 'Rui Tobias Carvalho (Canva Pro)',
   },
   {
